@@ -591,7 +591,7 @@ router.post('/uploadImage',upload.any(),async (request, response) => {
 router.get('/chatApp',verify,(request, response)=>{
   let objUser = request.user;
   console.log('objUser : '+JSON.stringify(objUser));
-  response.render('chatNew',{name: objUser.name});
+  response.render('chatNew',{name: objUser.firstname});
 })
   
 
