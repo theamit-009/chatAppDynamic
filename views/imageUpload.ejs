@@ -1,0 +1,50 @@
+
+
+
+<form method="post" action="/users/postchatter" id="formdata"  enctype="multipart/form-data">
+    <input type="text" name="name" style="width: 200px; border-color: rgb(35, 173, 228);" class="form-control"  placeholder="Enter Your Name"  />
+    <textarea name="content " type="textarea" style="width: 400px; padding-top: 10px; margin-top: 20px; border-color: rgb(35, 173, 228); height: 150px; " placeholder=" Share an Update" ></textarea>
+    <input type="file" onChange="chkFile(this)" name="fileprety" id="fileprety" multiple="false" class="form-control" />
+    <input type="hidden" value="NoFile" name="imgpath" id="file">
+    <button type="submit" class="btn btn-info" style="width: 150px; ">Share</button>     
+</form>
+<img src="#" id="previewImg" class="previewImg" />
+
+<script>
+$(document).ready(function(){
+    $('#previewImg').hide();
+});
+
+    function chkFile(file1) {
+        var file = file1.files[0];
+        var formData = new FormData();
+        formData.append('formData', file);
+    
+       
+        $.ajax({
+        type: "POST",
+        url: "/users/uploadImage",    
+        cache: true,
+        dataType:'json',
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function (data) {
+            console.log('Response  :  '+JSON.stringify(data));
+
+$('#previewImg').attr('src',data.url);
+$('#previewImg').show();
+//  var result = JSON.stringify(data)
+$('#file').val(data.url);
+
+
+},
+        
+         fail :  function(jqXHR, status, error){
+             console.log('jqXHR  '+JSON.stringify(jqXHR));
+         }
+
+      });
+    }
+
+</script>

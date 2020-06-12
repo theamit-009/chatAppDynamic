@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>WebScockets 101</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>     
+           <link href="/stylesheet/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+
+        <div id="mario-chat">
+            <h2>Chat Application</h2>
+            <div id="chat-window">
+                <div id="output"></div>
+                <div id="feedback"></div>
+            </div>
+            <input id="handle" type="text" placeholder="Enter Your Name" />
+            <input id="message" type="text" placeholder="Message" />
+            <button id="send">Send</button>
+        </div>
+
+
+    </body>
+    <script>
+        const socket = io('http://localhost:8000/users/chatter',{
+            reconnectionDelay: 1000,
+            reconnection: true,
+            reconnectionAttemps: 10,
+            transports: ['websocket'],
+            agent: false,
+            upgrade: false,
+            rejectUnauthorized: false
+        });
+        var message = document.getElementById('message'),
+      handle = document.getElementById('handle'),
+      btn = document.getElementById('send'),
+      output = document.getElementById('output'),
+      feedback = document.getElementById('feedback');
+
+// Emit events
+btn.addEventListener('click', function(){
+    socket.emit('chat', {
+        message: message.value,
+        handle: handle.value
+    });
+    message.value = "";
+});
+
+message.addEventListener('keypress', function(){
+    socket.emit('typing', handle.value);
+})
+
+// Listen for events
+socket.once('connect', socketConn => {
+socket.on('chat', function(data){
+    feedback.innerHTML = '';
+    output.innerHTML += '<p><strong>' + data.handle + ': </strong>' + data.message + '</p>';
+});
+
+socket.on('typing', function(data){
+    feedback.innerHTML = '<p><em>' + data + ' is typing a message...</em></p>';
+});
+});
+    </script>
+</html>

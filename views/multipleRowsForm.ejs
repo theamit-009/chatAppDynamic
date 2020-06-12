@@ -1,0 +1,82 @@
+<style>
+    #formdata .form-control {
+      width: auto;
+      }
+
+</style>
+
+    <div class="row mt-5">
+        <div class="col-md-8 m-auto">
+          <div class="">
+              <h4 align="center">Contct Form</h4>
+ 
+   
+
+          <form method="post" action="/postTestInsert" id="formdata"  enctype="multipart/form-data">
+            <div class="table-responsive">
+            <table class="table table-bordered" id="item_table">
+              <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Password</th>
+             
+              <th><button type="button" style="background-color:#2C3E50;" id="addButton" name="add" class="btn btn-success btn-sm add">Add Row</button></th>
+
+              </tr>
+            </table>
+            <div align="center">
+           
+              <input type="submit" style="background-color:#2C3E50;" name="submit" class="btn btn-info" value="Submit" />
+            </div>
+            </div>
+          </form>
+    </div>
+  </div>
+</div>
+
+
+<script>
+$(document).ready(function(){
+
+ $(document).on('click', '.add', function(){
+    var html = '';
+    html += '<tr>';
+    html += '<td><input type="text" name="firstName" class="form-control" /></td>';
+    html += '<td><input type="text" name="lastName" class="form-control " /></td>';
+    html += '<td><input type="email" name="email" class="form-control " /></td>';
+html += '<td><input type="passowrd" name="password" class="form-control " /></td>';
+   
+
+    html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></td></tr>';
+   
+    $('#item_table').append(html);
+
+$(document).on('click', '.remove', function(){
+$(this).closest('tr').remove();
+});
+ 
+
+});
+
+$(function () {
+  $('form#formdata').bind('submit', function () {
+    $.ajax({
+      type: 'post',
+      url: '/users/postTestInsert',
+      data: $('form#formdata').serialize(),
+      success: function (data) {
+        console.log(data);
+alert('Data Inserted Successfully ');
+       
+      },
+      fail:function(jqXHR ,status,error){
+        console.log('jqXHR '+JSON.stringify(jqXHR));        
+      }
+
+    });
+    return false;
+  });
+});
+})
+</script>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body{
+  background: url('/images/theme.jpg') no-repeat;
+  background-size: cover;
+  height: calc(100vh - 80px);
+}
+  div.transbox{
+    margin: 50px;
+    opacity: 1.0;
+  }
+
+    img {
+  border-radius: 25%;
+  height: 100px;
+  width: 100px;
+  margin-top: -20px;
+  
+}
+body {
+  color: white;
+  font-size: 16px;
+}
+
+h1 {
+  color: white;
+}
+    </style>
+</head>
+<div class="transbox">
+  <div class="row mt-5">
+      <div class="col-md-6 m-auto">
+       <center><img src="/images/login.png"></img></center>
+          <h1 class="text-center mb-3"> Login</h1>
+        <% include ./partials/messages.ejs %>
+<form action="/users/loginPost" method="post">
+    <div class="form-group">
+        <label for="email" class="lead mt-4">Email</label>
+        <input type="email" name="email" class="form-control"  placeholder="Enter Email"
+        />
+      </div>
+      <div class="form-group">
+        <label for="password" class="lead mt-4">Password</label>
+        <input type="password" name="password" class="form-control" placeholder="Enter Password"
+        />
+      </div>
+     
+   <center> <input type="submit" class="btn btn-info" > 
+   </center>
+   <p class="lead mt-4">Forgot Password? <a href="/users/forgotPassword">Click Here</a></p>
+
+</form>
+</div>
+</div>
+</div>
+</html>

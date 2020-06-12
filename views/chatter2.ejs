@@ -1,0 +1,76 @@
+<head>
+  <style> 
+  div.container {
+    width: 100%;
+    border: 1 px solid rgb(22, 143, 190);
+  }
+  
+  div.box {
+    box-sizing: border-box;
+    width: 25%;
+    padding-top: 30px;
+    float: left;
+  }
+  </style>
+  </head>
+  <div class="row mt-5">
+  
+      <h3 class="text-center mb-3" style="border-color: cornflowerblue; height: 50px; width: 5%; color: rgb(203, 203, 221); text-align: left; padding-left: 20px;">
+     Post  
+      </h3>
+      <form action="/users/postchatter" method="post">
+   </div>
+   <div class="form-group">
+              <label for="name"> Name</label>
+              <input type="text" name="name" value="<%= objUser3.name %>" style="width: 200px; border-color: rgb(35, 173, 228);" class="form-control"  placeholder="Enter Your Name"  />
+   </div>
+   <div class="form-group">
+    <input type="text" name="content" style="width: 200px; border-color: rgb(35, 173, 228);" class="form-control"  placeholder="Share an Update"  />
+  </div>
+   <input type="file" onChange="chkFile(this)" name="fileprety" id="fileprety" multiple="false" class="form-control" />
+   <input type="hidden" value="NoFile" name="imgpath" id="file"><br/>  
+   <button type="submit" class="btn btn-info" style="width: 150px; ">Share</button>     
+      </form>
+      <script>
+
+        function chkFile(file1) {
+            var file = file1.files[0];
+            var formData = new FormData();
+            formData.append('formData', file);
+        
+           
+            $.ajax({
+            type: "POST",
+            url: "/users/uploadImage",    
+            cache: true,
+            dataType:'json',
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function (data) {
+              console.log(data);
+            //  var result = JSON.stringify(data)
+             $('#file').val(data.url);
+             
+             },
+            
+             fail :  function(jqXHR, status, error){
+                 console.log('jqXHR  '+JSON.stringify(jqXHR));
+             }
+    
+          });
+        }
+    
+    </script>
+         <% for(var i = 0; i < objPost.rows; i++) { %>
+          <div class="container" style="padding-top: 20px;">
+            <div  class="box" style= "color: azure ; padding-top: 2px; ">
+               <%= objPost.name %> : </br>
+               <%= objPost.content__c %> 
+              </div>
+          </br>
+        </br></br>
+          <button type="like" class="btn btn-info" style="width: auto; ">Like</button> 
+          <button type="comment" class="btn btn-info" style="width: auto; ">Comment</button>
+         </div>
+      <% } %>
