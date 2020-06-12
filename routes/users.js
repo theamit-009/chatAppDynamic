@@ -273,7 +273,16 @@ contactQueryError) => {
                                     errors.push({msg: 'You are not registered'});
                                     response.render('login',{errors});
                                    }
-                       }})
+                       }
+                       else if(loginResult.rowCount == 0)
+                       {
+                        console.log('inside else');
+                        errors.push({msg: 'You are not registered'});
+                        response.render('login',{errors});
+
+                       }
+                      
+                      })
         .catch((loginError) =>{
          console.log('loginError   :  '+loginError.stack);
           isUserExist = false;
@@ -581,6 +590,7 @@ router.post('/uploadImage',upload.any(),async (request, response) => {
 
 router.get('/chatApp',verify,(request, response)=>{
   let objUser = request.user;
+  console.log('objUser : '+JSON.stringify(objUser));
   response.render('chatNew',{name: objUser.name});
 })
   
