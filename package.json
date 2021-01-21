@@ -29,7 +29,7 @@
     "parser": "^0.1.4",
     "pg": "^8.1.0",
     "pg-format": "^1.0.4",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "success": "^0.1.0"
   },
   "devDependencies": {
