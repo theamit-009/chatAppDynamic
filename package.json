@@ -20,7 +20,7 @@
     "flash": "^1.1.0",
     "g": "^2.0.1",
     "http-errors": "^1.6.3",
-    "jsdom": "^16.2.2",
+    "jsdom": "^16.5.0",
     "jsonwebtoken": "^8.5.1",
     "loader": "^2.1.1",
     "morgan": "~1.9.1",
